@@ -1,0 +1,28 @@
+{% for l6 in last6 %}
+    <div class="col-lg-4">
+        <div class="post-entry d-block small-post-entry-v">
+            <div class="thumbnail">
+                <a href="#">
+                    <img src="{{ l6.picture }}" alt="Image" class="img-fluid">
+                </a>
+            </div>
+            <div class="content">
+                <div class="post-meta mb-1">
+                    <a href="#" class="category">{{ l6.category.name }}</a> &mdash;
+                    <span class="date">{{ l6.creationDate |date('Y-m-d H:i:s') }}</span>
+                </div>
+                <h2 class="heading mb-3"><a href="#">{{ l6.title }}</a></h2>
+                <p>{{ l6.introduction }}</p>
+                <a href="#" class="post-author d-flex align-items-center">
+                    <div class="author-pic">
+                        <img src="{{ l6.blogger.profilePic }}" alt="Image">
+                    </div>
+                    <div class="text">
+                        <strong>{{ l6.blogger.fullName }}</strong>
+                        <span>{{ l6.blogger.Profession }}</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endfor%}

@@ -1,0 +1,33 @@
+{% for trendArticle in trendingArticles %}
+
+    <div class="item">
+        <div class="post-entry d-lg-flex">
+            <div class="me-lg-5 thumbnail mb-4 mb-lg-0">
+                <a href="#">
+                    <img src="{{ trendArticle.picture }}" alt="Image" class="img-fluid">
+                </a>
+            </div>
+            <div class="content align-self-center">
+                <div class="post-meta mb-3">
+                    <a href="#" class="category">{{ trendArticle.category.name }}</a>
+                    &mdash;
+                    <span class="date">{{ trendArticle.creationDate|date('Y-m-d H:i:s')}}</span>
+
+
+                </div>
+                <h2 class="heading"><a href="#">{{ trendArticle.title }}</a></h2>
+                <p>{{ trendArticle.introduction }}</p>
+                <a href="#" class="post-author d-flex align-items-center">
+                    <div class="author-pic">
+                        <img src="{{ trendArticle.blogger.profilePic }}" alt="Image">
+                    </div>
+                    <div class="text">
+                        <strong>{{ trendArticle.blogger.fullName }}</strong>
+                        <span>{{ trendArticle.blogger.Profession }}</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}

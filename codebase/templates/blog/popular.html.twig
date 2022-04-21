@@ -1,0 +1,28 @@
+{% for p in popularBlogs%}
+    <div class="item">
+        <div class="post-entry d-block small-post-entry-v">
+            <div class="thumbnail">
+                <a href="single.html">
+                    <img src="{{ p.picture }}" alt="Image" class="img-fluid">
+                </a>
+            </div>
+            <div class="content">
+                <div class="post-meta mb-1">
+                    <a href="#" class="category">{{ p.category.name }}</a> &mdash;
+                    <span class="date">{{ p.creationDate |date('Y-m-d H:i:s') }}</span>
+                </div>
+                <h2 class="heading mb-3"><a href="#">{{p.title}}</a></h2>
+                <p>{{ p.introduction }}</p>
+                <a href="#" class="post-author d-flex align-items-center">
+                    <div class="author-pic">
+                        <img src="{{ p.blogger.profilePic }}" alt="Image">
+                    </div>
+                    <div class="text">
+                        <strong>{{ p.blogger.fullName }}</strong>
+                        <span>{{ p.blogger.Profession }}</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
