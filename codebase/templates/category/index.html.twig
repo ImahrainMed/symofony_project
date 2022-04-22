@@ -1,20 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CategoryController!{% endblock %}
+{% block title %}SQLI - Categories{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/src/Controller/CategoryController.php'|file_link(0) }}">src/Controller/CategoryController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/templates/category/index.html.twig'|file_link(0) }}">templates/category/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="section pt-5 pb-0">
+        <div class="container">
+            <div class="row mb-5 justify-content-center">
+                <div class="col-lg-9">
+                    <span class="fw-normal text-uppercase d-block mb-1">Categories</span>
+                    <h2 class="heading">'{{category.name}}'</h2>
+                </div>
+            </div>
+      {% for article in category.articles %}
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <div class="post-entry d-md-flex small-horizontal mb-5">
+                        <div class="me-md-5 thumbnail mb-3 mb-md-0">
+                            <img src="{{article.picture}}" alt="Image" class="img-fluid">
+                        </div>
+                        <div class="content">
+                            <div class="post-meta mb-3">
+                                <a href="#" class="category">{{article.category.name}}</a> &mdash;
+                                <span class="date">{{article.creationDate |date("Y-m-d H:i:s")}}</span>
+                            </div>
+                            <h2 class="heading"><a href="#">{{article.title}}</a></h2>
+                            <p>{{article.introduction}}</p>
+                            <a href="#" class="post-author d-flex align-items-center">
+                                <div class="author-pic">
+                                    <img src="{{article.blogger.profilePic}}" alt="Image">
+                                </div>
+                                <div class="text">
+                                    <strong>{{article.blogger.fullName}}</strong>
+                                    <span>{{article.blogger.fullName}}, {{article.blogger.id}} published post</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       {% endfor %}
+        </div>
+    </div>
 {% endblock %}

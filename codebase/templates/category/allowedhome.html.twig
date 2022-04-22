@@ -1,0 +1,36 @@
+{% for category in allowedHome %}
+      <div class="col-lg-6">
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h2 class="h4 fw-bold">{{ category.name }}</h2>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                 {% for article in category.articles %}
+                            <div class="col-lg-12">
+                            <div class="post-entry d-md-flex xsmall-horizontal mb-5">
+                                <div class="me-md-3 thumbnail mb-3 mb-md-0">
+                                    <img src="{{article.picture}}" alt="Image" class="img-fluid">
+                                </div>
+                                <div class="content">
+                                    <div class="post-meta mb-1">
+                                        <a href="#" class="category">{{article.category.name}}</a>&mdash;
+                                        <span class="date">{{ article.creationDate|date("Y-m-d H:i:s") }}</span>
+                                    </div>
+                                    <h2 class="heading"><a href="#">{{article.title}}</a></h2>
+                                    <a href="#" class="post-author d-flex align-items-center">
+                                        <div class="author-pic">
+                                            <img src="{{article.blogger.profilepic}}" alt="Image">
+                                        </div>
+                                        <div class="text">
+                                            <strong>{{article.blogger.fullName}}</strong>
+                                            <span>{{article.blogger.fullName}}, {{article.blogger.id}} published post</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                 {% endfor %}
+                    </div>
+                </div>
+{% endfor %}

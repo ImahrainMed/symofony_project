@@ -45,7 +45,23 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
-
+    /**
+     * find by multiple criteria
+     * @param $value
+     * @return Article|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findByMultipleCriteria($value)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.title = :val')
+            ->orWhere('a.content = :val')
+            ->orWhere('a.introduction = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 
     // /**
     //  * @return Article[] Returns an array of Article objects

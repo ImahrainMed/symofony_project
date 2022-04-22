@@ -1,3 +1,36 @@
-{% extends 'home/index.html.twig' %}
+{% extends 'base.html.twig' %}
+{% block title %} Product - SQLI {% endblock %}
+{% block body %}
+    <div class="section post-section pt-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="text-center">
+                        <img src="{{article.blogger.profilePic}}" alt="Image" class="author-pic img-fluid rounded-circle mx-auto">
+                    </div>
+                    <span class="d-block text-center">{{article.blogger.fullName}}</span>
+                    <span class="date d-block text-center small text-uppercase text-black-50 mb-5">{{article.creationDate |date('Y-m-d H:i:s')}}</span>
+                    <h2 class="heading text-center">{{article.title}}</h2>
+                    <p class="lead mb-4 text-center">{{article.introduction}}</p>
+                    <img src="{{article.picture}}" alt="Image" class="img-fluid rounded mb-4">
+                    <p>
+                        {{article.content}}
+                    </p>
+                    <div class="row mt-5 pt-5 border-top">
+                        <div class="col-12">
+                            <span class="fw-bold text-black small mb-1">Share</span>
+                            <ul class="social list-unstyled">
+                                <li><a href="#"><span class="icon-facebook"></span></a></li>
+                                <li><a href="#"><span class="icon-twitter"></span></a></li>
+                                <li><a href="#"><span class="icon-linkedin"></span></a></li>
+                                <li><a href="#"><span class="icon-pinterest"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 
