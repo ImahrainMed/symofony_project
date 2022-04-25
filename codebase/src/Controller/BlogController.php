@@ -3,8 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Comment;
+use App\Entity\User;
+use App\Form\CommentType;
+use App\Form\UserType;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -72,17 +77,29 @@ class BlogController extends AbstractController
     /**
      * search by title / introduction / content
      * @Route("/search" ,name="app_blog_search" , methods={"GET"})
+     * @param Article $article
+     * @param FormFactoryInterface $factory
      * @param Request $request
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function Search(Request $request):Response
+    public function Search(FormFactoryInterface $factory ,Request $request):Response
     {
+        /** Retrieve parameter from request */
         $param = $request->query->get("_search");
+        $searchedArticle = $this->articleRepository->findByMultipleCriteria($param);
+       /* $user = new User();
+        $form = $factory->create(UserType::class,$user);
+        $form->handleRequest($request);*/
+       /* if($form->isSubmitted() && $form->isValid())
+        {
+            $searchedArticle->addComment($comment);
+        }*/
 
-        $article = $this->articleRepository->findByMultipleCriteria($param);
 
         return $this->render("blog/index.html.twig",[
-            'article'=>$article
+            'article'=>$searchedArticle,
+            //'userForm'=> $form->createView()
         ]);
     }
 

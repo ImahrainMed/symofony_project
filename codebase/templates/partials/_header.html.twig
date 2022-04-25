@@ -11,10 +11,10 @@
         <div class="site-navigation">
             <div class="row">
                 <div class="col-md-6 text-center order-1 order-md-2 mb-3 mb-md-0">
-                    <a href="index-2.html" class="logo m-0 text-uppercase">MagDesign</a>
+                    <a href="{{path("app_home")}}" class="logo m-0 text-uppercase">MagDesign</a>
                 </div>
                 <div class="col-md-3 order-3 order-md-1">
-                    <form action="search" method="GET" class="search-form">
+                    <form action="{{path('app_blog_search')}}" method="GET" class="search-form">
                         <span class="icon-search2"></span>
                         <input type="search" id="_search" name="_search" class="form-control" placeholder="Search...">
                         <input type="submit" hidden />

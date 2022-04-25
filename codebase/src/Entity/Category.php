@@ -21,7 +21,7 @@ class Category
     private $id;
 
     /**
-     * @Gedmo\Slug(fields={"name"})
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $name;

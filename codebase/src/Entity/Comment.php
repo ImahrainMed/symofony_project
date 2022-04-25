@@ -34,6 +34,11 @@ class Comment
      */
     private $user_comment;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $creationDate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +76,18 @@ class Comment
     public function setUserComment(string $user_comment): self
     {
         $this->user_comment = $user_comment;
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creationDate;
+    }
+
+    public function setCreationDate(\DateTimeInterface $creationDate): self
+    {
+        $this->creationDate = $creationDate;
 
         return $this;
     }

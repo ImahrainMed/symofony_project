@@ -8,7 +8,7 @@
                     <div class="text-center">
                         <img src="{{article.blogger.profilePic}}" alt="Image" class="author-pic img-fluid rounded-circle mx-auto">
                     </div>
-                    <span class="d-block text-center">{{article.blogger.fullName}}</span>
+                    <span class="d-block text-center">{{article.Blogger.fullName}}</span>
                     <span class="date d-block text-center small text-uppercase text-black-50 mb-5">{{article.creationDate |date('Y-m-d H:i:s')}}</span>
                     <h2 class="heading text-center">{{article.title}}</h2>
                     <p class="lead mb-4 text-center">{{article.introduction}}</p>
@@ -27,8 +27,25 @@
                             </ul>
                         </div>
                     </div>
+
+                    {% if article.comments != [] %}
+
+                        {% for comment in article.comments %}
+                            <div class="mt-4 p-5 bg-primary text-white rounded">
+                                <h3>{{ comment.user.name }}</h3>
+                                <p><small>{{ comment.creationDate|date("Y-m-d H:i:s") }}</small></p>
+                                <p>{{ comment.UserComment }}</p>
+                            </div>
+                        {% endfor %}
+
+
+                    {% endif %}
                 </div>
             </div>
+        </div>
+        <div class="form">
+         {#   {{ form(userForm) }}#}
+           {# {{ render(controller('App\\Controller\\CommentController::addComment')) }}#}
         </div>
     </div>
 {% endblock %}

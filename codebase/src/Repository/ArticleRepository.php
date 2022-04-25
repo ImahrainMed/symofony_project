@@ -54,12 +54,14 @@ class ArticleRepository extends ServiceEntityRepository
     public function findByMultipleCriteria($value)
     {
         return $this->createQueryBuilder('a')
-            ->where('a.title = :val')
-            ->orWhere('a.content = :val')
-            ->orWhere('a.introduction = :val')
-            ->setParameter('val', $value)
+            ->where('a.title = :val1')
+            ->setParameter('val1', $value)
+            ->orWhere('a.content like :val2')
+            ->setParameter('val2', '%'.$value.'%')
+            ->orWhere('a.introduction like :val')
+            ->setParameter('val', '%'.$value.'%')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getOneOrNullResult() //to return one or null result
             ;
     }
 

@@ -22,7 +22,6 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Gedmo\Slug(fields={"name"})
      */
     private $title;
 
