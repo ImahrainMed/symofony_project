@@ -2,27 +2,42 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Article;
 use App\Entity\Comment;
-use App\Entity\User;
+
 use App\Form\CommentType;
-use App\Form\UserType;
+
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
+use App\Service\CommentService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BlogController extends AbstractController
 {
     /** @var ArticleRepository  */
     private ArticleRepository $articleRepository;
 
-    public function __construct(ArticleRepository $articleRepository )
+    /*** @var CommentService */
+    private CommentService $commentService;
+    /**
+     * @var CategoryRepository
+     */
+    private CategoryRepository $categoryRepository;
+
+
+    public function __construct( ArticleRepository $articleRepository , CommentService $commentService , CategoryRepository $categoryRepository)
     {
         $this->articleRepository = $articleRepository;
+        $this->commentService = $commentService;
+        $this->categoryRepository = $categoryRepository;
+
     }
 
     /**
@@ -76,32 +91,44 @@ class BlogController extends AbstractController
 
     /**
      * search by title / introduction / content
-     * @Route("/search" ,name="app_blog_search" , methods={"GET"})
-     * @param Article $article
+     * @Route("/search" ,name="app_blog_search" )
      * @param FormFactoryInterface $factory
      * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
      * @return Response
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function Search(FormFactoryInterface $factory ,Request $request):Response
+    public function Search(Request $request, UrlGeneratorInterface $urlGenerator):Response
     {
         /** Retrieve parameter from request */
         $param = $request->query->get("_search");
         $searchedArticle = $this->articleRepository->findByMultipleCriteria($param);
-       /* $user = new User();
-        $form = $factory->create(UserType::class,$user);
-        $form->handleRequest($request);*/
-       /* if($form->isSubmitted() && $form->isValid())
+
+        /** @var Article[] $articles get related Articles */
+        $catArticles = $this->categoryRepository->findBy(["name"=>$searchedArticle->getCategory()->getName()]);
+        $comment = new Comment();
+        $comment->setCreationDate(new \DateTime());
+        $comment->setArticle($searchedArticle);
+        $comment->setIsValid(false);
+        $commentForm = $this->createForm(CommentType::class,$comment);
+        $commentForm->handleRequest($request);
+
+        if($commentForm->isSubmitted() && $commentForm->isValid())
         {
-            $searchedArticle->addComment($comment);
-        }*/
+            $this->commentService->saveComment($comment);
+            $this->addFlash('success', 'your comment sent ');
+            return new RedirectResponse($urlGenerator->generate('app_blog_search', ['_search' => $searchedArticle->getTitle()]));
+
+        }
 
 
         return $this->render("blog/index.html.twig",[
             'article'=>$searchedArticle,
-            //'userForm'=> $form->createView()
+            'catArticles' => $catArticles,
+            'commentForm'=> $commentForm->createView()
         ]);
     }
+
 
 
 }

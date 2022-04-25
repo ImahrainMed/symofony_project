@@ -18,16 +18,16 @@ class Comment
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
+     *
+     * @ORM\Column(type="text",length=255)
      */
-    private $user;
+    private $username;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
+     *
+     * @ORM\Column(type="text",length=255)
      */
-    private $article;
+    private $email;
 
     /**
      * @ORM\Column(type="text")
@@ -39,34 +39,38 @@ class Comment
      */
     private $creationDate;
 
+    /**
+     * @ORM\Column(type="boolean" , options={"default"=false})
+     */
+    private $isValid;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getArticle(): ?Article
+    /**
+     * @return mixed
+     */
+    public function getArticle()
     {
         return $this->article;
     }
 
-    public function setArticle(?Article $article): self
+    /**
+     * @param mixed $article
+     */
+    public function setArticle($article): void
     {
         $this->article = $article;
-
-        return $this;
     }
+
 
     public function getUserComment(): ?string
     {
@@ -91,4 +95,54 @@ class Comment
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username): void
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getIsValid(): ?bool
+    {
+        return $this->isValid;
+    }
+
+    public function setIsValid(bool $isValid): self
+    {
+        $this->isValid = $isValid;
+
+        return $this;
+    }
+
+
+
+
+
+
 }
